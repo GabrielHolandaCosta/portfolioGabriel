@@ -5,11 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const languageToggle = document.getElementById('languageToggle');
     const htmlRoot = document.getElementById('html-root');
     const heroSection = document.getElementById('hero');
-    const heroContent = heroSection?.querySelector('.hero-content');
     const storageKey = 'portfolio-language';
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const mobileViewport = window.matchMedia('(max-width: 768px)');
-    const finePointer = window.matchMedia('(pointer: fine)');
     const headerThreshold = 48;
 
     let ticking = false;
@@ -98,25 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function updateHeroParallax() {
-        if (!heroContent) {
-            return;
-        }
-
-        if (prefersReducedMotion.matches || mobileViewport.matches) {
-            heroContent.style.transform = '';
-            heroContent.style.opacity = '';
-            return;
-        }
-
-        const scrolled = window.scrollY;
-
-        if (scrolled < window.innerHeight) {
-            heroContent.style.transform = `translateY(${scrolled * 0.28}px)`;
-            heroContent.style.opacity = Math.max(0.7, 1 - (scrolled / window.innerHeight) * 0.32);
-        }
-    }
-
     function requestScrollUpdate() {
         if (ticking) {
             return;
@@ -125,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ticking = true;
         window.requestAnimationFrame(() => {
             updateActiveSection();
-            updateHeroParallax();
             ticking = false;
         });
     }
@@ -189,13 +167,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createHeroParticles() {
-        if (!heroSection || prefersReducedMotion.matches) {
+        if (!heroSection || prefersReducedMotion.matches || mobileViewport.matches) {
             return;
         }
 
         const heroParticlesContainer = document.createElement('div');
         const fragment = document.createDocumentFragment();
-        const numberOfParticles = mobileViewport.matches ? 22 : 46;
+        const numberOfParticles = 18;
 
         heroParticlesContainer.className = 'hero-particles';
 
@@ -209,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
             particle.style.left = `${Math.random() * 100}vw`;
             particle.style.top = `${Math.random() * 100}vh`;
             particle.style.animationDelay = `${Math.random() * 5}s`;
-            particle.style.animationDuration = `${Math.random() * 3 + 2.8}s`;
+            particle.style.animationDuration = `${Math.random() * 5 + 7}s`;
 
             fragment.appendChild(particle);
         }
@@ -218,46 +196,9 @@ document.addEventListener('DOMContentLoaded', () => {
         heroSection.prepend(heroParticlesContainer);
     }
 
-    function createCustomCursor() {
-        if (!finePointer.matches || prefersReducedMotion.matches) {
-            return;
-        }
-
-        const cursor = document.createElement('div');
-        let cursorTicking = false;
-        let cursorX = 0;
-        let cursorY = 0;
-
-        cursor.className = 'custom-cursor';
-        document.body.appendChild(cursor);
-
-        document.addEventListener('mousemove', (event) => {
-            cursorX = event.clientX;
-            cursorY = event.clientY;
-            cursor.classList.add('is-visible');
-
-            if (cursorTicking) {
-                return;
-            }
-
-            cursorTicking = true;
-            window.requestAnimationFrame(() => {
-                cursor.style.left = `${cursorX}px`;
-                cursor.style.top = `${cursorY}px`;
-                cursorTicking = false;
-            });
-        }, { passive: true });
-
-        document.addEventListener('mouseleave', () => {
-            cursor.classList.remove('is-visible');
-        });
-    }
-
     updateLanguage(currentLanguage);
     createHeroParticles();
-    createCustomCursor();
     updateActiveSection();
-    updateHeroParallax();
 
     window.addEventListener('scroll', requestScrollUpdate, { passive: true });
     window.addEventListener('resize', requestScrollUpdate);

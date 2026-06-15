@@ -2595,3 +2595,137 @@ button:focus-visible {
         display: none;
     }
 }
+
+/* Performance: mantém o visual, mas evita repaints caros durante scroll e hover. */
+.header,
+.language-toggle {
+    backdrop-filter: none;
+}
+
+.header {
+    transition: opacity 0.35s var(--animation-ease), transform 0.35s var(--animation-ease), background-color 0.35s ease;
+}
+
+.hero-bg-img {
+    filter: brightness(0.38) grayscale(100%);
+    transform: none;
+    transition: opacity 0.8s var(--animation-ease);
+    will-change: auto;
+}
+
+.hero-section.active .hero-bg-img {
+    transform: none;
+    opacity: 0.22;
+}
+
+.hero-content .logo-hero {
+    filter: none;
+}
+
+.hero-content h1,
+.projects-title h2,
+.skills-title h2,
+.experience-title h2,
+.courses-title h2,
+.contact-info h2 {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.22);
+}
+
+.project-item,
+.skill-item,
+.experience-item,
+.course-item {
+    transition-property: opacity, transform, border-color, background-color;
+}
+
+.project-item {
+    will-change: auto;
+}
+
+.about-img img,
+.project-thumb,
+.contact-image img {
+    filter: none;
+    opacity: 0.88;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.about-img img:hover,
+.project-item:hover .project-thumb,
+.contact-section.active .contact-image img {
+    filter: none;
+    opacity: 1;
+}
+
+.project-item:hover .project-thumb {
+    transform: scale(1.025);
+}
+
+.particle {
+    background-color: rgba(255, 255, 255, 0.32);
+    box-shadow: none;
+}
+
+.social-icons a,
+.social-icons a:hover {
+    filter: none;
+}
+
+.social-icons a {
+    transition: transform 0.25s var(--animation-ease), color 0.25s ease;
+}
+
+@media (max-width: 768px) {
+    .header {
+        backdrop-filter: none;
+    }
+
+    .hero-particles,
+    .custom-cursor {
+        display: none !important;
+    }
+
+    .hero-bg-img {
+        opacity: 0.16;
+    }
+
+    .hero-content h1,
+    .projects-title h2,
+    .skills-title h2,
+    .experience-title h2,
+    .courses-title h2,
+    .contact-info h2 {
+        text-shadow: none;
+    }
+
+    .about-img,
+    .project-item,
+    .skill-item,
+    .experience-item,
+    .course-item {
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.42);
+    }
+
+    .about-img img,
+    .project-thumb,
+    .contact-image img,
+    .project-item:hover .project-thumb {
+        filter: none !important;
+        opacity: 1;
+        transform: none !important;
+    }
+
+    .project-item,
+    .skill-item,
+    .experience-item,
+    .course-item,
+    .project-content-area,
+    .contact-info,
+    .about-text {
+        transition-duration: 0.35s !important;
+    }
+
+    .icon-square {
+        box-shadow: none;
+    }
+}
