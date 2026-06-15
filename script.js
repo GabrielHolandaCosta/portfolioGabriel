@@ -1,244 +1,264 @@
-// Sistema de Tradução e Funcionalidades
 document.addEventListener('DOMContentLoaded', () => {
     const header = document.getElementById('header');
-    const sections = document.querySelectorAll('.section');
-    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = Array.from(document.querySelectorAll('.section'));
+    const navLinks = Array.from(document.querySelectorAll('.nav-link'));
     const languageToggle = document.getElementById('languageToggle');
     const htmlRoot = document.getElementById('html-root');
-    
-    let scrollTimeout;
-    const headerThreshold = 50;
-    let currentLanguage = localStorage.getItem('portfolio-language') || 'pt';
+    const heroSection = document.getElementById('hero');
+    const heroContent = heroSection?.querySelector('.hero-content');
+    const storageKey = 'portfolio-language';
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mobileViewport = window.matchMedia('(max-width: 768px)');
+    const finePointer = window.matchMedia('(pointer: fine)');
+    const headerThreshold = 48;
 
-    // Inicializar idioma
-    function initLanguage() {
-        updateLanguage(currentLanguage);
+    let ticking = false;
+    let currentLanguage = getStoredLanguage();
+
+    function getStoredLanguage() {
+        try {
+            const savedLanguage = localStorage.getItem(storageKey);
+            return savedLanguage === 'en' ? 'en' : 'pt';
+        } catch {
+            return 'pt';
+        }
     }
 
-    // Função para atualizar o idioma
+    function saveLanguage(lang) {
+        try {
+            localStorage.setItem(storageKey, lang);
+        } catch {
+            // O site continua funcionando mesmo se o navegador bloquear localStorage.
+        }
+    }
+
+    function getTranslation(lang, key) {
+        return key.split('.').reduce((value, part) => value?.[part], translations?.[lang]);
+    }
+
     function updateLanguage(lang) {
         currentLanguage = lang;
-        localStorage.setItem('portfolio-language', lang);
-        htmlRoot.setAttribute('lang', lang === 'pt' ? 'pt-BR' : 'en');
-        
-        // Atualizar texto do botão
-        const langText = languageToggle.querySelector('.lang-text');
-        langText.textContent = lang === 'pt' ? 'PT' : 'EN';
-        
-        // Atualizar todos os elementos com data-translate
-        document.querySelectorAll('[data-translate]').forEach(element => {
-            const key = element.getAttribute('data-translate');
-            const keys = key.split('.');
-            let value = translations[lang];
-            
-            for (let k of keys) {
-                value = value?.[k];
+        saveLanguage(lang);
+
+        htmlRoot?.setAttribute('lang', lang === 'pt' ? 'pt-BR' : 'en');
+
+        if (languageToggle) {
+            const langText = languageToggle.querySelector('.lang-text');
+            if (langText) {
+                langText.textContent = lang === 'pt' ? 'PT' : 'EN';
             }
-            
-            if (value !== undefined) {
-                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                    element.placeholder = value;
-                } else {
-                    element.textContent = value;
-                }
+
+            languageToggle.setAttribute(
+                'aria-label',
+                lang === 'pt' ? 'Mudar idioma para inglês' : 'Switch language to Portuguese'
+            );
+            languageToggle.setAttribute(
+                'title',
+                lang === 'pt' ? 'Mudar idioma para inglês' : 'Switch language to Portuguese'
+            );
+        }
+
+        document.querySelectorAll('[data-translate]').forEach((element) => {
+            const value = getTranslation(lang, element.getAttribute('data-translate'));
+
+            if (value === undefined) {
+                return;
+            }
+
+            if (element.matches('input, textarea')) {
+                element.placeholder = value;
+            } else {
+                element.textContent = value;
             }
         });
     }
 
-    // Toggle de idioma
-    if (languageToggle) {
-        languageToggle.addEventListener('click', () => {
-            const newLang = currentLanguage === 'pt' ? 'en' : 'pt';
-            updateLanguage(newLang);
-            
-            // Animação no botão
-            languageToggle.style.transform = 'scale(0.9)';
-            setTimeout(() => {
-                languageToggle.style.transform = 'scale(1)';
-            }, 150);
-        });
-    }
+    function updateActiveSection() {
+        const viewportMarker = window.innerHeight * 0.42;
+        let currentActiveSectionId = sections[0]?.id || '';
 
-    // Inicializar idioma ao carregar
-    initLanguage();
+        sections.forEach((section) => {
+            const rect = section.getBoundingClientRect();
 
-    // Função para atualizar a seção ativa e o link da navbar
-    const updateActiveSection = () => {
-        let currentActiveSectionId = '';
-        const scrollY = window.scrollY;
-        const viewportHeight = window.innerHeight;
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            const activationPoint = sectionTop - viewportHeight * 0.3;
-
-            if (scrollY >= activationPoint && scrollY < sectionTop + sectionHeight) {
+            if (rect.top <= viewportMarker && rect.bottom >= viewportMarker) {
                 currentActiveSectionId = section.id;
             }
 
-            if (scrollY >= activationPoint - 100 && scrollY < sectionTop + sectionHeight) {
+            if (rect.top <= window.innerHeight * 0.82 && rect.bottom >= window.innerHeight * 0.08) {
                 section.classList.add('active');
             }
         });
 
-        // Atualiza a classe 'active' nos links da navegação
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').includes(currentActiveSectionId)) {
-                link.classList.add('active');
-            }
+        navLinks.forEach((link) => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${currentActiveSectionId}`);
         });
 
-        // Mostrar/Esconder header
-        if (scrollY > headerThreshold) {
-            header.classList.add('visible');
-        } else {
-            header.classList.remove('visible');
+        if (header) {
+            header.classList.toggle('visible', window.scrollY > headerThreshold || mobileViewport.matches);
         }
-    };
+    }
 
-    // Adiciona o smooth scroll e atualiza a classe 'active' ao clicar nos links
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
+    function updateHeroParallax() {
+        if (!heroContent) {
+            return;
+        }
 
-            if (targetSection) {
-                const headerHeight = header.offsetHeight;
-                const scrollPosition = targetSection.offsetTop - headerHeight;
+        if (prefersReducedMotion.matches || mobileViewport.matches) {
+            heroContent.style.transform = '';
+            heroContent.style.opacity = '';
+            return;
+        }
 
-                window.scrollTo({
-                    top: scrollPosition,
-                    behavior: 'smooth'
-                });
+        const scrolled = window.scrollY;
 
-                navLinks.forEach(nav => nav.classList.remove('active'));
-                link.classList.add('active');
+        if (scrolled < window.innerHeight) {
+            heroContent.style.transform = `translateY(${scrolled * 0.28}px)`;
+            heroContent.style.opacity = Math.max(0.7, 1 - (scrolled / window.innerHeight) * 0.32);
+        }
+    }
+
+    function requestScrollUpdate() {
+        if (ticking) {
+            return;
+        }
+
+        ticking = true;
+        window.requestAnimationFrame(() => {
+            updateActiveSection();
+            updateHeroParallax();
+            ticking = false;
+        });
+    }
+
+    function animateScrollTo(targetY) {
+        const distance = Math.abs(targetY - window.scrollY);
+        const shouldJump = prefersReducedMotion.matches || mobileViewport.matches || distance > 3200;
+
+        window.scrollTo({
+            top: targetY,
+            behavior: shouldJump ? 'auto' : 'smooth'
+        });
+    }
+
+    navLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+            const targetId = link.getAttribute('href')?.substring(1);
+            const targetSection = targetId ? document.getElementById(targetId) : null;
+
+            if (!targetSection) {
+                return;
             }
+
+            navLinks.forEach((nav) => nav.classList.remove('active'));
+            link.classList.add('active');
+
+            if (mobileViewport.matches) {
+                return;
+            }
+
+            event.preventDefault();
+
+            const headerHeight = header?.offsetHeight || 0;
+            const scrollPosition = Math.max(targetSection.offsetTop - headerHeight + 1, 0);
+
+            animateScrollTo(scrollPosition);
         });
     });
 
-    // Listener para o evento de scroll com debounce
-    window.addEventListener('scroll', () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(updateActiveSection, 100);
+    languageToggle?.addEventListener('click', () => {
+        updateLanguage(currentLanguage === 'pt' ? 'en' : 'pt');
+        languageToggle.classList.add('is-pressing');
+        window.setTimeout(() => languageToggle.classList.remove('is-pressing'), 160);
     });
 
-    // Executa no carregamento inicial
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        document.querySelectorAll('.project-item, .skill-item, .experience-item, .course-item')
+            .forEach((element) => observer.observe(element));
+    }
+
+    function createHeroParticles() {
+        if (!heroSection || prefersReducedMotion.matches) {
+            return;
+        }
+
+        const heroParticlesContainer = document.createElement('div');
+        const fragment = document.createDocumentFragment();
+        const numberOfParticles = mobileViewport.matches ? 22 : 46;
+
+        heroParticlesContainer.className = 'hero-particles';
+
+        for (let index = 0; index < numberOfParticles; index += 1) {
+            const particle = document.createElement('span');
+            const size = Math.random() * 7 + 3;
+
+            particle.className = 'particle';
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}vw`;
+            particle.style.top = `${Math.random() * 100}vh`;
+            particle.style.animationDelay = `${Math.random() * 5}s`;
+            particle.style.animationDuration = `${Math.random() * 3 + 2.8}s`;
+
+            fragment.appendChild(particle);
+        }
+
+        heroParticlesContainer.appendChild(fragment);
+        heroSection.prepend(heroParticlesContainer);
+    }
+
+    function createCustomCursor() {
+        if (!finePointer.matches || prefersReducedMotion.matches) {
+            return;
+        }
+
+        const cursor = document.createElement('div');
+        let cursorTicking = false;
+        let cursorX = 0;
+        let cursorY = 0;
+
+        cursor.className = 'custom-cursor';
+        document.body.appendChild(cursor);
+
+        document.addEventListener('mousemove', (event) => {
+            cursorX = event.clientX;
+            cursorY = event.clientY;
+            cursor.classList.add('is-visible');
+
+            if (cursorTicking) {
+                return;
+            }
+
+            cursorTicking = true;
+            window.requestAnimationFrame(() => {
+                cursor.style.left = `${cursorX}px`;
+                cursor.style.top = `${cursorY}px`;
+                cursorTicking = false;
+            });
+        }, { passive: true });
+
+        document.addEventListener('mouseleave', () => {
+            cursor.classList.remove('is-visible');
+        });
+    }
+
+    updateLanguage(currentLanguage);
+    createHeroParticles();
+    createCustomCursor();
     updateActiveSection();
+    updateHeroParallax();
 
-    // Animação de entrada para elementos
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-            }
-        });
-    }, observerOptions);
-
-    // Observar elementos para animação
-    document.querySelectorAll('.project-item, .skill-item, .experience-item, .course-item').forEach(el => {
-        observer.observe(el);
-    });
-
-    // Efeito de parallax suave no hero
-    const heroSection = document.getElementById('hero');
-    if (heroSection) {
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const heroContent = heroSection.querySelector('.hero-content');
-            if (heroContent && scrolled < window.innerHeight) {
-                heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
-                heroContent.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
-            }
-        });
-    }
-
-    // Animação de digitação no hero (opcional)
-    function typeWriter(element, text, speed = 100) {
-        let i = 0;
-        element.textContent = '';
-        function type() {
-            if (i < text.length) {
-                element.textContent += text.charAt(i);
-                i++;
-                setTimeout(type, speed);
-            }
-        }
-        type();
-    }
-
-    // Efeito de hover nos cards de projeto
-    document.querySelectorAll('.project-item').forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-15px) scale(1.02)';
-        });
-        item.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-
-    // Animação de contador para números (se houver)
-    function animateCounter(element, target, duration = 2000) {
-        let start = 0;
-        const increment = target / (duration / 16);
-        const timer = setInterval(() => {
-            start += increment;
-            if (start >= target) {
-                element.textContent = target;
-                clearInterval(timer);
-            } else {
-                element.textContent = Math.floor(start);
-            }
-        }, 16);
-    }
-});
-
-// --- Geração de Partículas para a Seção Hero ---
-const heroSection = document.getElementById('hero');
-if (heroSection) {
-    const heroParticlesContainer = document.createElement('div');
-    heroParticlesContainer.classList.add('hero-particles');
-    heroSection.prepend(heroParticlesContainer);
-
-    const numberOfParticles = 50;
-    for (let i = 0; i < numberOfParticles; i++) {
-        const particle = document.createElement('span');
-        particle.classList.add('particle');
-        const size = Math.random() * 8 + 3;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${Math.random() * 100}vw`;
-        particle.style.top = `${Math.random() * 100}vh`;
-        particle.style.animationDelay = `${Math.random() * 5}s`;
-        particle.style.animationDuration = `${Math.random() * 3 + 2}s`;
-        heroParticlesContainer.appendChild(particle);
-    }
-}
-
-// Efeito de cursor personalizado (opcional)
-const cursor = document.createElement('div');
-cursor.classList.add('custom-cursor');
-document.body.appendChild(cursor);
-
-document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-});
-
-// Adicionar efeito de brilho ao passar o mouse em links
-document.querySelectorAll('a, button').forEach(element => {
-    element.addEventListener('mouseenter', function() {
-        this.style.filter = 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.5))';
-    });
-    element.addEventListener('mouseleave', function() {
-        this.style.filter = 'none';
-    });
+    window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+    window.addEventListener('resize', requestScrollUpdate);
 });

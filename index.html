@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfólio de Gabriel Holanda Costa, Cientista da Computação e Desenvolvedor Front-End. Projetos, experiência, habilidades e formas de contato.">
+    <meta name="theme-color" content="#000000">
     <title>Gabriel Holanda Costa | Cientista da Computação</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="style.css?v=20260615b">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="img/gabriel-logo.png">
 </head>
@@ -15,7 +20,7 @@
             <img src="img/gabriel-logo.png" alt="Logo Gabriel Holanda Costa">
             <span>Gabriel Holanda</span>
         </div>
-        <nav class="navbar">
+        <nav class="navbar" aria-label="Navegação principal">
             <ul>
                 <li><a href="#hero" class="nav-link active" data-page="01" data-translate="nav.home">Início</a></li>
                 <li><a href="#about" class="nav-link" data-page="02" data-translate="nav.about">Sobre Mim</a></li>
@@ -26,16 +31,17 @@
                 <li><a href="#contact" class="nav-link" data-page="07" data-translate="nav.contact">Contato</a></li>
             </ul>
         </nav>
-        <button class="language-toggle" id="languageToggle" aria-label="Toggle language">
+        <button class="language-toggle" id="languageToggle" type="button" aria-label="Alternar idioma">
             <span class="lang-icon">🌐</span>
             <span class="lang-text">PT</span>
         </button>
     </header>
 
     <section class="section hero-section active" id="hero">
+        <img src="img/hero-bg.png" alt="" class="hero-bg-img" aria-hidden="true" fetchpriority="high">
         <div class="hero-content">
             <div class="logo-hero">
-                <img src="img/gabriel-logo.png" alt="Logo Gabriel">
+                <img src="img/gabriel-logo.png" alt="Logo Gabriel" decoding="async">
                 <span>2025</span>
             </div>
             <h1 data-translate="hero.title">Gabriel Holanda Costa</h1>
@@ -52,7 +58,7 @@
     <section class="section about-section" id="about">
         <div class="content-wrapper">
             <div class="about-img">
-                <img src="img/gabriel-about.jpg" alt="Foto de Gabriel Holanda Costa">
+                <img src="img/gabriel-about.jpg" alt="Foto de Gabriel Holanda Costa" loading="lazy" decoding="async">
                 <div class="img-overlay"></div>
             </div>
             <div class="about-text">
@@ -160,7 +166,7 @@
             </div>
             <div class="project-grid">
                 <div class="project-item">
-                    <img src="img/project-caio-tonet.jpg" alt="Screenshot do Portfólio Caio Tonet" class="project-thumb">
+                    <img src="img/project-caio-tonet.jpg" alt="Screenshot do Portfólio Caio Tonet" class="project-thumb" loading="lazy" decoding="async">
                     <div class="project-content-area">
                         <h3 data-translate="projects.caioTonet.title">Portfólio Caio Tonet</h3>
                         <p data-translate="projects.caioTonet.description">Desenvolvimento de um portfólio moderno e artístico para o fotógrafo e artista visual Caio Tonet, apresentando sua obra de forma imersiva e responsiva.</p>
@@ -169,14 +175,14 @@
                             <span>CSS</span>
                             <span>JavaScript</span>
                         </div>
-                        <a href="https://gabrielholandacosta.github.io/Caio-Tonet/" target="_blank" class="project-link">
+                        <a href="https://gabrielholandacosta.github.io/Caio-Tonet/" target="_blank" rel="noopener noreferrer" class="project-link">
                             <span data-translate="projects.viewProject">Ver Projeto</span> <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
                 </div>
 
                 <div class="project-item">
-                    <img src="img/project-dr-lucas-farias.jpg" alt="Screenshot do Portfólio Dr. Lucas Farias" class="project-thumb">
+                    <img src="img/project-dr-lucas-farias.jpg" alt="Screenshot do Portfólio Dr. Lucas Farias" class="project-thumb" loading="lazy" decoding="async">
                     <div class="project-content-area">
                         <h3 data-translate="projects.drLucas.title">Portfólio Dr. Lucas Farias</h3>
                         <p data-translate="projects.drLucas.description">Criação de um portfólio médico elegante e funcional para o Dr. Lucas Farias, especialista em dor, com foco em design atraente e animações suaves.</p>
@@ -185,7 +191,7 @@
                             <span>CSS</span>
                             <span>JavaScript</span>
                         </div>
-                        <a href="https://gabrielholandacosta.github.io/dr-lucas-farias/" target="_blank" class="project-link">
+                        <a href="https://gabrielholandacosta.github.io/dr-lucas-farias/" target="_blank" rel="noopener noreferrer" class="project-link">
                             <span data-translate="projects.viewProject">Ver Projeto</span> <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
@@ -204,10 +210,10 @@
                             <span>React-i18next</span>
                         </div>
                         <div class="project-links">
-                            <a href="https://adminflow-dashboard.vercel.app" target="_blank" class="project-link">
+                            <a href="https://adminflow-dashboard.vercel.app" target="_blank" rel="noopener noreferrer" class="project-link">
                                 <span data-translate="projects.viewDemo">Ver Demo</span> <i class="fas fa-external-link-alt"></i>
                             </a>
-                            <a href="https://github.com/GabrielHolandaCosta/adminflow-dashboard" target="_blank" class="project-link project-link-secondary">
+                            <a href="https://github.com/GabrielHolandaCosta/adminflow-dashboard" target="_blank" rel="noopener noreferrer" class="project-link project-link-secondary">
                                 <i class="fab fa-github"></i> GitHub
                             </a>
                         </div>
@@ -227,10 +233,10 @@
                             <span>CSS</span>
                         </div>
                         <div class="project-links">
-                            <a href="https://shopcart-bice.vercel.app" target="_blank" class="project-link">
+                            <a href="https://shopcart-bice.vercel.app" target="_blank" rel="noopener noreferrer" class="project-link">
                                 <span data-translate="projects.viewDemo">Ver Demo</span> <i class="fas fa-external-link-alt"></i>
                             </a>
-                            <a href="https://github.com/GabrielHolandaCosta/shopcart" target="_blank" class="project-link project-link-secondary">
+                            <a href="https://github.com/GabrielHolandaCosta/shopcart" target="_blank" rel="noopener noreferrer" class="project-link project-link-secondary">
                                 <i class="fab fa-github"></i> GitHub
                             </a>
                         </div>
@@ -340,20 +346,16 @@
                 <h2 data-translate="contact.title">Entre em Contato</h2>
                 <p data-translate="contact.description">Tenho interesse em novas oportunidades de projetos, vagas e colaborações. Sinta-se à vontade para me enviar uma mensagem!</p>
                 <div class="social-icons">
-                    <a href="https://github.com/GabrielHolandaCosta" target="_blank" aria-label="GitHub Gabriel Holanda">
+                    <a href="https://github.com/GabrielHolandaCosta" target="_blank" rel="noopener noreferrer" aria-label="GitHub Gabriel Holanda">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://github.com/GabrielHolandaCosta/portfolioGabriel" target="_blank" aria-label="Portfolio GitHub Repository" title="Repositório deste portfólio">
-                        <i class="fab fa-github"></i>
-                        <span class="social-tooltip">Portfolio Repo</span>
-                    </a>
-                    <a href="https://linkedin.com/in/gabrielhdandadev" target="_blank" aria-label="LinkedIn Gabriel Holanda">
+                    <a href="https://linkedin.com/in/gabrielhdandadev" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Gabriel Holanda">
                         <i class="fab fa-linkedin"></i>
                     </a>
                     <a href="mailto:ugabrielprofissional@gmail.com" aria-label="Email Gabriel Holanda">
                         <i class="fas fa-envelope"></i>
                     </a>
-                    <a href="https://api.whatsapp.com/send?phone=5582993854696" target="_blank" aria-label="WhatsApp Gabriel Holanda">
+                    <a href="https://api.whatsapp.com/send?phone=5582993854696" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Gabriel Holanda">
                         <i class="fab fa-whatsapp"></i>
                     </a>
                 </div>
@@ -371,7 +373,7 @@
         <div class="page-number"><span data-translate="page">PAGE</span> 07</div>
     </section>
 
-    <script src="translations.js"></script>
-    <script src="script.js"></script>
+    <script src="translations.js?v=20260615b"></script>
+    <script src="script.js?v=20260615b"></script>
 </body>
 </html>
