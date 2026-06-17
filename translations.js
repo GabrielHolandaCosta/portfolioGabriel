@@ -22,7 +22,7 @@ const translations = {
             title: "Sobre Mim",
             p1: "Sou Gabriel Holanda Costa, um entusiasta da tecnologia e estudante dedicado do 5º período de Ciência da Computação na UNINASSAU, com previsão de término para o final de 2027.",
             p2: "Minha paixão pelo desenvolvimento web se aprofundou durante minha monitoria em Front-end, onde pude compartilhar conhecimentos e aprimorar minhas habilidades em HTML e CSS ao lado do professor Valdick Sales na UNINASSAU. Acredito na combinação de código limpo, design intuitivo e funcionalidade robusta para criar experiências digitais impactantes.",
-            p3: "Atualmente, atuo como Desenvolvedor Front-end em projeto governamental (PNLD) em parceria com o NEES/UFAL, onde aplico minhas habilidades em HTML, CSS e JavaScript para criar materiais digitais acessíveis e de alta qualidade.",
+            p3: "Também tive experiência como Desenvolvedor Front-end em projeto governamental (PNLD) em parceria com o NEES/UFAL, aplicando HTML, CSS e JavaScript na criação, revisão e melhoria de materiais digitais acessíveis e de alta qualidade.",
             p4: "Estou em constante aprendizado, explorando novas tecnologias e buscando desafios que me permitam crescer como desenvolvedor e entregar soluções inovadoras."
         },
         // Experience Section
@@ -82,10 +82,6 @@ const translations = {
             caioTonet: {
                 title: "Portfólio Caio Tonet",
                 description: "Desenvolvimento de um portfólio moderno e artístico para o fotógrafo e artista visual Caio Tonet, apresentando sua obra de forma imersiva e responsiva."
-            },
-            drLucas: {
-                title: "Portfólio Dr. Lucas Farias",
-                description: "Criação de um portfólio médico elegante e funcional para o Dr. Lucas Farias, especialista em dor, com foco em design atraente e animações suaves."
             },
             adminflow: {
                 title: "AdminFlow Dashboard",
@@ -182,7 +178,7 @@ const translations = {
             title: "About Me",
             p1: "I'm Gabriel Holanda Costa, a technology enthusiast and dedicated 5th period Computer Science student at UNINASSAU, with expected completion by the end of 2027.",
             p2: "My passion for web development deepened during my Front-end mentoring, where I was able to share knowledge and improve my skills in HTML and CSS alongside Professor Valdick Sales at UNINASSAU. I believe in combining clean code, intuitive design, and robust functionality to create impactful digital experiences.",
-            p3: "Currently, I work as a Front-end Developer on a government project (PNLD) in partnership with NEES/UFAL, where I apply my skills in HTML, CSS, and JavaScript to create accessible and high-quality digital materials.",
+            p3: "I also worked as a Front-end Developer on a government project (PNLD) in partnership with NEES/UFAL, applying HTML, CSS, and JavaScript to create, review, and improve accessible, high-quality digital materials.",
             p4: "I'm constantly learning, exploring new technologies, and seeking challenges that allow me to grow as a developer and deliver innovative solutions."
         },
         // Experience Section
@@ -242,10 +238,6 @@ const translations = {
             caioTonet: {
                 title: "Caio Tonet Portfolio",
                 description: "Development of a modern and artistic portfolio for photographer and visual artist Caio Tonet, presenting his work in an immersive and responsive way."
-            },
-            drLucas: {
-                title: "Dr. Lucas Farias Portfolio",
-                description: "Creation of an elegant and functional medical portfolio for Dr. Lucas Farias, pain specialist, with focus on attractive design and smooth animations."
             },
             adminflow: {
                 title: "AdminFlow Dashboard",
@@ -321,4 +313,3 @@ const translations = {
         page: "PAGE"
     }
 };
-
