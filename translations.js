@@ -20,7 +20,7 @@ const translations = {
         // About Section
         about: {
             title: "Sobre Mim",
-            p1: "Sou Gabriel Holanda Costa, um entusiasta da tecnologia e estudante dedicado do 5º período de Ciência da Computação na UNINASSAU, com previsão de término para o final de 2027.",
+            p1: "Sou Gabriel Holanda Costa, um entusiasta da tecnologia e estudante dedicado do 6º período de Ciência da Computação na UNINASSAU, com previsão de término para o final de 2027.",
             p2: "Minha paixão pelo desenvolvimento web se aprofundou durante minha monitoria em Front-end, onde pude compartilhar conhecimentos e aprimorar minhas habilidades em HTML e CSS ao lado do professor Valdick Sales na UNINASSAU. Acredito na combinação de código limpo, design intuitivo e funcionalidade robusta para criar experiências digitais impactantes.",
             p3: "Também tive experiência como Desenvolvedor Front-end em projeto governamental (PNLD) em parceria com o NEES/UFAL, aplicando HTML, CSS e JavaScript na criação, revisão e melhoria de materiais digitais acessíveis e de alta qualidade.",
             p4: "Estou em constante aprendizado, explorando novas tecnologias e buscando desafios que me permitam crescer como desenvolvedor e entregar soluções inovadoras."
@@ -132,12 +132,12 @@ const translations = {
                 uninassau: {
                     title: "UNINASSAU - Maceió",
                     period: "2024-2027",
-                    description: "Ciência da Computação - Atualmente no 5º período"
+                    description: "Ciência da Computação - Atualmente no 6º período"
                 },
                 english: {
                     title: "Inglês - Intermediário (B1/B2)",
                     institution: "IBL (Instituto Brasileiro de Línguas)",
-                    description: "Atualmente no 2º ano"
+                    description: "Atualmente no 3º ano"
                 }
             }
         },
@@ -176,7 +176,7 @@ const translations = {
         // About Section
         about: {
             title: "About Me",
-            p1: "I'm Gabriel Holanda Costa, a technology enthusiast and dedicated 5th period Computer Science student at UNINASSAU, with expected completion by the end of 2027.",
+            p1: "I'm Gabriel Holanda Costa, a technology enthusiast and dedicated 6th period Computer Science student at UNINASSAU, with expected completion by the end of 2027.",
             p2: "My passion for web development deepened during my Front-end mentoring, where I was able to share knowledge and improve my skills in HTML and CSS alongside Professor Valdick Sales at UNINASSAU. I believe in combining clean code, intuitive design, and robust functionality to create impactful digital experiences.",
             p3: "I also worked as a Front-end Developer on a government project (PNLD) in partnership with NEES/UFAL, applying HTML, CSS, and JavaScript to create, review, and improve accessible, high-quality digital materials.",
             p4: "I'm constantly learning, exploring new technologies, and seeking challenges that allow me to grow as a developer and deliver innovative solutions."
@@ -288,12 +288,12 @@ const translations = {
                 uninassau: {
                     title: "UNINASSAU - Maceió",
                     period: "2024-2027",
-                    description: "Computer Science - Currently in the 5th period"
+                    description: "Computer Science - Currently in the 6th period"
                 },
                 english: {
                     title: "English - Intermediate (B1/B2)",
                     institution: "IBL (Instituto Brasileiro de Línguas)",
-                    description: "Currently in the 2nd year"
+                    description: "Currently in the 3rd year"
                 }
             }
         },
