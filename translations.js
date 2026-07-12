@@ -79,10 +79,6 @@ const translations = {
         // Projects Section
         projects: {
             title: "Meus Projetos",
-            caioTonet: {
-                title: "Portfólio Caio Tonet",
-                description: "Desenvolvimento de um portfólio moderno e artístico para o fotógrafo e artista visual Caio Tonet, apresentando sua obra de forma imersiva e responsiva."
-            },
             adminflow: {
                 title: "AdminFlow Dashboard",
                 description: "Dashboard administrativo completo em React + TypeScript com sistema de autenticação, controle de acesso baseado em roles, CRUD completo para usuários e tarefas, internacionalização (pt-BR, en, es) e interface totalmente responsiva.",
@@ -235,10 +231,6 @@ const translations = {
         // Projects Section
         projects: {
             title: "My Projects",
-            caioTonet: {
-                title: "Caio Tonet Portfolio",
-                description: "Development of a modern and artistic portfolio for photographer and visual artist Caio Tonet, presenting his work in an immersive and responsive way."
-            },
             adminflow: {
                 title: "AdminFlow Dashboard",
                 description: "Complete administrative dashboard in React + TypeScript with authentication system, role-based access control, full CRUD for users and tasks, internationalization (pt-BR, en, es) and fully responsive interface.",
